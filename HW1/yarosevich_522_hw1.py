@@ -109,18 +109,82 @@ vl = vl[:,1]
 S_ij = np.outer(vl, vr) / np.dot(vl,vr)
 
 #%%
-# Part IV
+# Part IV For Juvinilles
 import numpy as np
 import matplotlib.pyplot as plt
 
 fecun = np.array([0, .0043, .1132, 0])
 prob = np.array([[.9775, .9111, 0, 0], [0, .0736, .9534, 0], [0, 0, .0452, .9804]])
 A = np.row_stack([fecun,prob])
-n0 = np.array([50, 50, 50, 50])
 
 w, v = np.linalg.eig(A)
 max_eig_index = w.argmax()
 eigvec_stable = v[:,max_eig_index]
 eig_vec_sum = np.sum(eigvec_stable)
 n_0 = (eigvec_stable / eig_vec_sum) * 250
+
+t_max = 100
+t_mesh = np.arange(1, t_max +1)
+
+# Declaring population array and inputting initial condition.
+n_t = np.zeros((4, t_max))
+n_t[:, 0] = n_0
+N_t = np.sum(n_t, 0)
+
+growth = 1.0
+sust_growth = growth
+h_list = np.zeros(4)
+
+while growth > 0:
+    sust_growth = growth
+    h_list[1] = h_list[1] + 1
+    for t in range(1, t_max):
+        n_t[:, t] = np.dot(A, n_t[:, t - 1]) - h_list
+        if n_t[1, t] < 0:
+            n_t[1, t] = 0
+
+    N_t = np.sum(n_t, 0)
+    growth = np.polyfit(t_mesh, np.log(N_t), 1)[0]
+
+#%%
+# Part IV For reproductive adults
+import numpy as np
+import matplotlib.pyplot as plt
+
+fecun = np.array([0, .0043, .1132, 0])
+prob = np.array([[.9775, .9111, 0, 0], [0, .0736, .9534, 0], [0, 0, .0452, .9804]])
+A = np.row_stack([fecun,prob])
+
+w, v = np.linalg.eig(A)
+max_eig_index = w.argmax()
+eigvec_stable = v[:,max_eig_index]
+eig_vec_sum = np.sum(eigvec_stable)
+n_0 = (eigvec_stable / eig_vec_sum) * 250
+
+t_max = 100
+t_mesh = np.arange(1, t_max +1)
+
+# Declaring population array and inputting initial condition.
+n_t = np.zeros((4, t_max))
+n_t[:, 0] = n_0
+N_t = np.sum(n_t, 0)
+
+growth = 1.0
+sust_growth = growth
+h_list = np.zeros(4)
+counter = 0
+
+while growth > 0:
+    if counter > 50:
+        break
+    counter = counter + 1
+    sust_growth = growth
+    h_list[2] = h_list[2] + 1
+    for t in range(1, t_max):
+        n_t[:, t] = np.dot(A, n_t[:, t - 1]) - h_list
+        if n_t[2, t] < 0:
+            n_t[2, t] = 0
+
+    N_t = np.sum(n_t, 0)
+    growth = np.polyfit(t_mesh, np.log(N_t), 1)[0]
 
