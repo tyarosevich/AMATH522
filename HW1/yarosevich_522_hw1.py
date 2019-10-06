@@ -1,3 +1,6 @@
+
+
+#%% Part II
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -58,3 +61,49 @@ lambda_est = np.exp(poly_coeff[0])
 # calculated eigenvalue of A.
 lambda_dom = np.amax(np.linalg.eigvals(A))
 # #plt.legend()
+
+#%% Part III
+import numpy as np
+import matplotlib.pyplot as plt
+
+# b.) and c.)
+
+fecun_vec = .24 * np.ones(50)
+fecun_vec[0:3] = 0
+surv_mat = np.diag(.952 * np.ones(50))
+surv_mat[0, 0] = 1
+surv_mat[1,1,] = 1
+surv_mat[2,2] = .0722
+
+A = np.row_stack([fecun_vec,surv_mat])
+A = np.delete(A, 50, 0)
+t_max = 100
+t_mesh = np.arange(1, t_max + 1)
+n_0 = 10 * np.ones(50)
+n_t = np.zeros((50, t_max))
+n_t[:,0] = n_0
+
+for t in range(1, t_max):
+    n_t[:, t] = np.dot(A, n_t[:, t-1])
+
+N_t = np.sum(n_t, 0)
+plt.figure(3)
+plt.plot(t_mesh, np.log(N_t), 'r--')
+plt.xlabel('t')
+plt.ylabel('log N(t)')
+
+
+poly_coeff = np.polyfit(t_mesh, np.log(N_t),1)
+lambda_est = np.exp(poly_coeff[0])
+
+lambda_dom = np.amax(np.linalg.eigvals(A))
+
+#part d.)
+
+w, vr = np.linalg.eig(A)
+vr = vr[:,1]
+
+w, vl = np.linalg.eig(A.T)
+vl = vl[:,1]
+
+S_ij = np.outer(vl, vr) / np.dot(vl,vr)
