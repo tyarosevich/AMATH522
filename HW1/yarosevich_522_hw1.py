@@ -107,3 +107,20 @@ w, vl = np.linalg.eig(A.T)
 vl = vl[:,1]
 
 S_ij = np.outer(vl, vr) / np.dot(vl,vr)
+
+#%%
+# Part IV
+import numpy as np
+import matplotlib.pyplot as plt
+
+fecun = np.array([0, .0043, .1132, 0])
+prob = np.array([[.9775, .9111, 0, 0], [0, .0736, .9534, 0], [0, 0, .0452, .9804]])
+A = np.row_stack([fecun,prob])
+n0 = np.array([50, 50, 50, 50])
+
+w, v = np.linalg.eig(A)
+max_eig_index = w.argmax()
+eigvec_stable = v[:,max_eig_index]
+eig_vec_sum = np.sum(eigvec_stable)
+n_0 = (eigvec_stable / eig_vec_sum) * 250
+
