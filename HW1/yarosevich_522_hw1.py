@@ -50,7 +50,7 @@ plt.xlabel('t')
 plt.ylabel('n_a(t) / N(t)')
 plt.legend()
 
-#plt.show()
+plt.show()
 
 # Polyfits a 1st degree polynomial to the data and
 # declares the estimate of lambda.
