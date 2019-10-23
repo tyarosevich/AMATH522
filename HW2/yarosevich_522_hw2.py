@@ -16,35 +16,23 @@ sort_list = [c1_sort, c2_sort, c3_sort]
 states = np.zeros(numsteps, dtype = 'int')
 states[0] = 0
 
+# This seems to be correct. There was something wrong with the last one.
+for k in np.arange(0, numsteps - 1):
+    if states[k] == 0:
+        states[k+1] = np.random.choice(3, 1, p = [.98, .02, 0])
+    if states[k] == 1:
+        states[k+1] = np.random.choice(3, 1, p = [.1, .7, .2])
+    if states[k] == 2:
+        states[k+1] = np.random.choice(3, 1, p = [0, .05, .95])
 
-#for k in np.arange(0, numsteps - 1):
-#    j = states[k]
+#for k in np.arange(0, numsteps-1):
 #    rand = rd.random()
-#    if j == 0:
-#        if rand < .02:
-#            states[k+1] = 1
-#        else:
-#            states[k+1] = 0
-#    elif j == 1:
-#        if rand < .1:
-#            states[k+1] = 0
-#        elif rand < .2:
-#            states[k+1] = 2
-#        else:
-#            states[k+1] = 1
-#    elif j == 2:
-#        if rand < .05:
-#            states[k+1] = 1
-#        else:
-#            states[k+1] = 2
-for k in np.arange(0, numsteps-1):
-    rand = rd.random()
-    if rand < A[sort_list[states[k]][0], states[k]]:
-        states[k+1] = sort_list[states[k]][0]
-    elif rand < A[sort_list[states[k]][1], states[k]]:
-        states[k+1] = sort_list[states[k]][1]
-    else:
-        states[k+1] = sort_list[states[k]][2]
+#    if rand < A[sort_list[states[k]][0], states[k]]:
+#        states[k+1] = sort_list[states[k]][0]
+#    elif rand < A[sort_list[states[k]][1], states[k]]:
+#        states[k+1] = sort_list[states[k]][1]
+#    else:
+#        states[k+1] = sort_list[states[k]][2]
 
 
 #reduced_states = states[:]
@@ -66,7 +54,7 @@ print("Sim done")
 
 #%%
 unique, counts = np.unique(states, return_counts=True)
-dict(zip(unique, counts))2
+dict(zip(unique, counts))
 
 
 #%%
