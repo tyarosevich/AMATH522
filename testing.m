@@ -24,7 +24,6 @@ for k=1:numsteps-1
 
 end;
 
-%----
 figure
 set(gca,'FontSize',18)
 plot(1:numsteps,states,'.','MarkerSize',20)
