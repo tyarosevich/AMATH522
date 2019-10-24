@@ -71,10 +71,38 @@ n, bins, patches = plt.hist(dwell_list, n_bins, facecolor='blue', alpha=0.5)
 plt.yscale('log', nonposy = 'clip')
 plt.show()
 
+#%%
+# Part 4.)
+import numpy as np
+import matplotlib.pyplot as plt
+import random as rd
+
+N_in = 100
+N_out = 50
+p_in = .4
+p_out = .6
+numsteps = 500
+T = np.arange(0, 150)
+p_T = np.zeros(len(T))
+
+# Simulate realizations compared against each T
+for k in np.arange(0, len(T)):
+    spike = 0.0
+    # Simulate lots of realizations of N
+    for i in np.arange(0, numsteps):
+        N_in_open = np.sum(np.random.choice([1, 0], size = N_in, p = [p_in, 1 - p_in]))
+        N_out_open = np.sum(np.random.choice([1,0], size = N_out, p = [p_out, 1 - p_out]))
+        net_current = N_in_open - N_out_open
+        if net_current > k:
+            spike = spike + 1
+    p_T[k] = spike/numsteps
+print("Sim done")
+    
+#%%
 
 
+plt.plot(T, p_T)
+plt.xlabel('T')
+plt.ylabel('Probability of Spike')
 
-
-
-
-
+plt.show()
