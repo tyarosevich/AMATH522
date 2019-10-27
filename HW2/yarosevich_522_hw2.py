@@ -77,32 +77,48 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random as rd
 
-N_in = 100
-N_out = 50
+
+N_in = 10
+N_out = 5
 p_in = .4
 p_out = .6
-numsteps = 500
-T = np.arange(0, 150)
+numsteps = 1000
+T = np.arange(300)
 p_T = np.zeros(len(T))
+current_list = np.zeros(numsteps)
+mean = N_in*p_in - N_out*p_out
 
-# Simulate realizations compared against each T
+# Simulate realizations compared against each threshhold T
 for k in np.arange(0, len(T)):
     spike = 0.0
+    
     # Simulate lots of realizations of N
     for i in np.arange(0, numsteps):
+        # Generates a coin toss vector for the inward and outward channels
+        # in which 'open' corresponds to 1. Sums the vector to ascertain
+        # the number of open channels in a realization.
         N_in_open = np.sum(np.random.choice([1, 0], size = N_in, p = [p_in, 1 - p_in]))
         N_out_open = np.sum(np.random.choice([1,0], size = N_out, p = [p_out, 1 - p_out]))
+        # The net current, open inward channels minus open outward.
         net_current = N_in_open - N_out_open
+        # IF the net current is more than T, a spike occurs
         if net_current > k:
-            spike = spike + 1
+            spike = spike + 1.0
+        if k == 1:
+            current_list[i] = net_current
+            
+    # Once numsteps realizations have been simulated, divides the number
+    # of spikes by the total number of realizations to get the probability
+    # that a spike will occur with a given threshhold T
     p_T[k] = spike/numsteps
 print("Sim done")
     
 #%%
 
-
+plt.figure(1)
 plt.plot(T, p_T)
-plt.xlabel('T')
+plt.xlabel('T*E(I)')
 plt.ylabel('Probability of Spike')
+plt.axis([0, 5*mean, 0, 1])
 
 plt.show()
