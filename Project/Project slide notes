@@ -1,0 +1,11 @@
+So the model:
+
+(1) Uses the SEIR model as a system of ODEs that will be optimized over to ascertain the parameters.
+
+(2) Talk about the parameters, how Beta is determined, which ones are assumed and why.
+
+(3) How the paper uses the optimization function call to get the parameters.
+
+(4) Then time steps the dD and dC functions to model a fit to the current data.
+
+(5) So why this convoluted path? Why optimize over the SEIR model to get the parameters and then time step the C and D functions? Why is the B(t) function a decaying exponential. 
