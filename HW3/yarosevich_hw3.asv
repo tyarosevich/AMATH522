@@ -41,4 +41,63 @@ set(gca,'FontSize',16)
 % trajectories, corresponding to 6 sets of concentrations. The overall
 % reason for this is because the gamma term creates a coupling that is
 % symmetric, in that each concentration now has a damping effect on one
-% other (in some cases this relationship is 
+% other (in some cases this relationship is 'twice removed'). The result is
+% that if any particular concentration gets larger, it will, circuitously,
+% give a bump to another concetration that inhibits it. 
+
+%%
+clc; clear all; close all;
+
+% Simulate the repressilator model
+% Positive Feedforward loop
+
+alpha=2;
+beta =2;
+gamma = .5;
+n = 2;
+k=1;
+
+p = [alpha, beta, gamma, n, k];
+y0 = [0, 0];
+tmax = 20;
+
+[T,Y] = ode45(@posfeed,[0, tmax],y0,[],p);
+
+
+
+subplot(2,1,1);
+plot(T,Y(:,1), 'k', 'LineWidth', 2)
+title('X Behavior')
+subplot(2,1,2);
+plot(T,Y(:,2), 'b',  'LineWidth', 2)
+title('Y Behavior')
+
+%Seems to work perfectly! Had to tune the strength of the z effect and the
+%rate of decay.
+
+%% Double negative feedback
+clc; clear all; close all;
+
+alpha=2;
+beta =2;
+gamma = .5;
+n = 2;
+k=1;
+
+p = [alpha, beta, gamma, n, k];
+y0 = [0, 1];
+tmax = 10;
+
+[T,Y] = ode45(@negfeed,[0, tmax],y0,[],p);
+
+
+
+subplot(2,1,1);
+plot(T,Y(:,1), 'k', 'LineWidth', 2)
+title('X Behavior')
+subplot(2,1,2);
+plot(T,Y(:,2), 'b',  'LineWidth', 2)
+title('Y Behavior')
+
+% This works, but it l
+
