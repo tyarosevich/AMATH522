@@ -7,7 +7,7 @@ alpha=50;
 alpha0=0;
 beta=.2;
 n=2;
-gamma = -2;
+gamma = 1;
 
 
 %for numreps=1:4 
@@ -25,7 +25,7 @@ plot(T,Y(:,4:6),':','LineWidth',3) ; hold on;
 plot(T,Y(:,7:9),':','LineWidth',3) ; hold on;
 plot(T,Y(:,10:12),':','LineWidth',3) ; hold on;
 
-legend('m lalcl','m tetR','m cl','p lacl','p tetR','p cl')
+legend({'$m_1$', '$m_2$', '$m_3$', '$p_1$', '$p_2$','$p_3$','$n_1$', '$n_2$', '$n_3$', '$q_1$', '$q_2$','$q_3$'}, 'Interpreter', 'latex')
 xlabel('t') ; 
 set(gca,'FontSize',16)
 
@@ -105,22 +105,26 @@ title('Y Behavior')
 %%
 clc; clear all; close all;
 
-alpha=1;
+alpha=.001;
 beta = 5;
 gamma =1;
 n = 1;
 k=1;
 
 p = [alpha, beta, gamma, n, k];
-y0 = [0,0, 0];
+y0 = [0, 0, 0, 0, 0, 0, 0];
 tmax = 20;
 
 [T,Y] = ode45(@sharktooth,[0, tmax],y0,[],p);
 
-
-
+figure(1)
 plot(T,Y(:,2), 'k', 'LineWidth', 2)
-title('X Behavior')
+title('')
+hold on;
+plot(T, Y(:,5), 'b', 'LineWidth', 2)
+plot(T, Y(:,7), 'm', 'LineWidth', 2)
+legend({'$Z_1$', '$Z_2$', '$Z_3$'}, 'Interpreter', 'latex')
+
 
 
 

@@ -99,5 +99,32 @@ subplot(2,1,2);
 plot(T,Y(:,2), 'b',  'LineWidth', 2)
 title('Y Behavior')
 
-% This works, but it l
+% This works, but it lacks some of the intuition from the prompt, at least
+% insofar as I'm basing Y's decay on x in order to represent repression by
+% X).
+%%
+clc; clear all; close all;
+
+alpha=1;
+beta = 5;
+gamma =1;
+n = 1;
+k=1;
+
+p = [alpha, beta, gamma, n, k];
+y0 = [0, 0, 0, 0, 0, 0];
+tmax = 20;
+
+[T,Y] = ode45(@sharktooth,[0, tmax],y0,[],p);
+
+figure(1)
+plot(T,Y(:,2), 'k', 'LineWidth', 2)
+title('X Behavior')
+hold on;
+plot(T, Y(:,
+
+
+
+
+
 
