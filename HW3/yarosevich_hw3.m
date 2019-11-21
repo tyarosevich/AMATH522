@@ -5,9 +5,9 @@ close all
 alpha=50;
 
 alpha0=0;
-beta=.2;
+beta=.5;
 n=2;
-gamma = 1;
+gamma = -.27;
 
 
 %for numreps=1:4 
@@ -68,8 +68,10 @@ tmax = 20;
 subplot(2,1,1);
 plot(T,Y(:,1), 'k', 'LineWidth', 2)
 title('X Behavior')
+xlabel('t')
 subplot(2,1,2);
 plot(T,Y(:,2), 'b',  'LineWidth', 2)
+xlabel('t')
 title('Y Behavior')
 
 %Seems to work perfectly! Had to tune the strength of the z effect and the
